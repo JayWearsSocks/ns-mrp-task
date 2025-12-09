@@ -40,5 +40,23 @@ Installed the SDKMAN! package manager and Gradle build tool. But then at step 2 
 Let's try another sample app called "java-basic".
 The first step (create bucket) is the same as in blank-java, so we can copy the output file (with the bucket name) into the java-basic directory and then move to step 2. I get an error that it cannot find java 21, which makes sense as I had java 25 installed, so that could be fixed. But then I run into another problem with the test platform.
 
+## Code based on python blueprint
+
 There isn't much time left to code at all at this point, and I'm not sure it's a good idea to keep installing things on my laptop without doing some research first. I would like to code something, so even though the task asks for java, let's try to work with the basic python example from the aws lambda blueprint since we know we can code that.
+
+We got something working that takes input and checks it (the format is based on the template input for triggers coming from the aws api gateway). I created some test cases in the console to check for missing fields etc.
+
+## Next steps
+
+* Adding database integration (didn't have enough time left to try this, unfortunately)
+* Add security measures for invoking the lambda so that only the intended API can access it. (And assign editing rights for developing with a team).
+* Set up infrastructure-as-code to deploy the aws infra and the code at the same time, from a repository
+* Set up unit tests for the repository code (to run locally)
+* Set up test cases to be run automatically after deployment (deploy to a "staging" environment, then test there before deploying to "live")
+* Set up performance test cases. Get an idea of the required performance for the business case. Try out some different scenarios e.g. with different memory allocations. Perhaps compare similar lambdas already in use.
+* Possible performance bottle-neck could be the database interaction.
+  * Maybe these requests can be processed asynchronously: the API received and validates the data, caches the data for some time (or until some amount is accrued) and replies immediately (with some queue-id?). Then stores to the db in a batch. (And perhaps there can be another endpoint for the client to check on the status of storing the data).
+  * Maybe the database can be partitioned in some way, e.g. store sales from different souces in different tables.
+* From what I learned about AWS lambda, is that a lot of scaling is taken care of automatically. So I'm not sure if it's needed to manually control things like the number of instances of the lambda that are running.
+
 
